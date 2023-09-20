@@ -1,7 +1,7 @@
 const express = require('express') /// importando el modelo express
 const app = express()
 
-//http://localhost:3000/
+
 
 app.get('/', (req, res) => {
     res.json({msg: 'hello get'})
@@ -17,8 +17,28 @@ app.get('/:user/:pass', (req, res) => {
     res.json ({msg: 'error en el usuario y contraseña'})
 })
 
+//http://localhost:3000/login?user=usuario&password=1234
 
-app.post('/', (req, res) => {
+app.get('/login', (req, res) => {
+    const {user, password} = req.query
+    if (!user || !password) {
+        res.status(400).json({msg: 'Necesitas proporcionar tu usuario y contraseña' })
+        return
+        
+    }
+
+
+    if  (user === 'Paola' && password=== '1234') { 
+        res.json ({msg: 'iniciaste sesión con exito'}) 
+        return
+
+    }
+    res.status(404).json({msg: 'Error en el usuario y/o contraseña' })
+}) 
+
+
+
+app.post('/', (req, res) => { //endpoint
     res.json({msg: 'hello post'})
 })
 
